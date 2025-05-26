@@ -1,0 +1,93 @@
+# 🛠️ Setup Instructions: OwnCloud Docker Deployment
+
+This guide walks you through the steps to deploy a self-hosted OwnCloud server using Docker Compose with HTTPS, monitoring, and secure networking.
+
+---
+
+## ✅ Prerequisites
+
+Before you begin, ensure you have the following:
+
+- A Linux server or VM (Debian/Ubuntu recommended)
+- Docker and Docker Compose installed
+- A domain name (e.g., from DuckDNS)
+- Ports 80 and 443 open and forwarded (if behind NAT/router)
+- Your `.env` file created based on `.env.example`
+- Sudo privileges
+
+---
+
+## 📦 Install Required Packages
+
+### Docker & Docker Compose
+
+```bash
+sudo apt update && sudo apt install -y \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  software-properties-common
+
+# Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+# Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/2.24.6/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Verify installation
+docker --version
+docker-compose --version
+
+# Set Up DuckDNS (Dynamic DNS)
+Sign up at https://www.duckdns.org
+
+Create a subdomain (e.g., tylerscloudsvm.duckdns.org)
+
+Update your router/firewall to port forward:
+
+80 → 80 (HTTP)
+
+443 → 443 (HTTPS)
+
+
+# Project Structure
+Ensure your folders are structured like this:
+
+
+owncloud-docker-setup/
+├── docker-compose.yml
+├── .env
+├── traefik/
+│   └── traefik.yml
+├── grafana/
+│   └── dashboards/
+
+## Configure .env File
+Create your own .env file from the provided example:
+
+
+cp .env.example .env
+nano .env
+Edit the values for:
+
+OWNCLOUD_DOMAIN
+
+TRAEFIK_EMAIL
+
+ADMIN_USERNAME and ADMIN_PASSWORD
+
+OWNCLOUD_DB_USERNAME and OWNCLOUD_DB_PASSWORD
+
+DUCKDNS_TOKEN if applicable
+
+## Start the Stack
+From your project root:
+
+
+docker-compose up -d
+Verify all containers are running:
+
+
+docker-compose ps
