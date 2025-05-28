@@ -14,3 +14,14 @@ This repository documents the setup of a secure self-hosted [Nextcloud](https://
 
 - [Setup Instructions](setup-instructions.md)
 - [Troubleshooting Guide](troubleshooting.md)
+
+## 🖥 Screenshots
+
+### 📁 Nextcloud Web Interface
+![Nextcloud UI](nextcloud-ui.png)
+
+### 🔐 NGINX Proxy Manager Setup
+![NPM Proxy Host](nginx-proxy-manager.png)
+
+### 🐳 Portainer Container Dashboard
+![Portainer View](portainer-dashboard.png)
