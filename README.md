@@ -21,7 +21,7 @@ This repository documents the setup of a secure self-hosted [Nextcloud](https://
 ![Nextcloud UI](nextcloud-ui.png)
 (nextcloud-dashboard.png)
 ### 🔐 NGINX Proxy Manager Setup
-![NPM Proxy Host](nginx-pm.png)
+![NPM Proxy Host](nignx-pm.png)
 
 ### 🐳 Portainer Container Dashboard
 ![Portainer View](portainer-dashboard.png)
