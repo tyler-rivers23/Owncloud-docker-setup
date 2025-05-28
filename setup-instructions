@@ -1,10 +1,10 @@
-# 🛠️ Setup Instructions: nextcloud Docker Deployment
+#  Setup Instructions: nextcloud Docker Deployment
 
 This guide walks you through the steps to deploy a self-hosted nextcloud server using Docker Compose with HTTPS, monitoring, and secure networking.
 
 ---
 
-## ✅ Prerequisites
+##  Prerequisites
 
 Before you begin, ensure you have the following:
 
@@ -17,7 +17,7 @@ Before you begin, ensure you have the following:
 
 ---
 
-## 📦 Install Required Packages
+##  Install Required Packages
 
 ### Docker & Docker Compose
 
