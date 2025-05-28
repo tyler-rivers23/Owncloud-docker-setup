@@ -1,6 +1,6 @@
-# 🛠️ Setup Instructions: OwnCloud Docker Deployment
+# 🛠️ Setup Instructions: nextcloud Docker Deployment
 
-This guide walks you through the steps to deploy a self-hosted OwnCloud server using Docker Compose with HTTPS, monitoring, and secure networking.
+This guide walks you through the steps to deploy a self-hosted nextcloud server using Docker Compose with HTTPS, monitoring, and secure networking.
 
 ---
 
@@ -36,14 +36,11 @@ sudo sh get-docker.sh
 sudo curl -L "https://github.com/docker/compose/releases/download/2.24.6/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-# Verify installation
-docker --version
-docker-compose --version
 
 # Set Up DuckDNS (Dynamic DNS)
 Sign up at https://www.duckdns.org
 
-Create a subdomain (e.g., tylerscloudsvm.duckdns.org)
+Create a subdomain (e.g., nextcloud.duckdns.org)
 
 Update your router/firewall to port forward:
 
@@ -52,19 +49,7 @@ Update your router/firewall to port forward:
 443 → 443 (HTTPS)
 
 
-# Project Structure
-Ensure your folders are structured like this:
-
-
-owncloud-docker-setup/
-├── docker-compose.yml
-├── .env
-├── traefik/
-│   └── traefik.yml
-├── grafana/
-│   └── dashboards/
-
-## Configure .env File
+#
 Create your own .env file from the provided example:
 
 
@@ -72,13 +57,12 @@ cp .env.example .env
 nano .env
 Edit the values for:
 
-OWNCLOUD_DOMAIN
+NEXTCLOUD_DOMAIN
 
-TRAEFIK_EMAIL
 
 ADMIN_USERNAME and ADMIN_PASSWORD
 
-OWNCLOUD_DB_USERNAME and OWNCLOUD_DB_PASSWORD
+NEXTCLOUD_DB_USERNAME and NEXTCLOUD_DB_PASSWORD
 
 DUCKDNS_TOKEN if applicable
 
