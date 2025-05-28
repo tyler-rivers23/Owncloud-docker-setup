@@ -12,8 +12,8 @@ This repository documents the setup of a secure self-hosted [Nextcloud](https://
 
 ## 📖 Documentation
 
-- [Setup Instructions](setup-instructions.md)
-- [Troubleshooting Guide](troubleshooting.md)
+- [Setup Instructions](setup-instructions)
+- [Troubleshooting Guide](troubleshooting)
 
 ## 🖥 Screenshots
 
