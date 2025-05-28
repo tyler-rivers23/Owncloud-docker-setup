@@ -1,58 +1,81 @@
-# 🐛 Troubleshooting Guide: OwnCloud Docker Setup
+# 🛠 Troubleshooting Guide
 
-This guide provides solutions to common issues encountered while deploying OwnCloud using Docker Compose with Traefik, MariaDB, Redis, and Grafana.
+## ❌ Can't Access Nextcloud via Browser
 
----
+- Make sure NGINX Proxy Manager is properly pointing to port 8080
+- Confirm ports 80/443 are forwarded in your router
+- Verify your domain is resolving to your public IP address
 
-## ❌ Error: "Failed to connect to the database"
+## 🔒 Trusted Domain Error
 
-### 🔍 Symptoms
-OwnCloud fails to initialize and shows:
-Error while trying to create admin user: Failed to connect to the database:
-An exception occurred in driver: SQLSTATE[HY000] [1045]
-Access denied for user 'trivers23'@'172.19.0.4' (using password: YES)
+You might see a message like:
 
-### ✅ Fix
-- Double-check the database credentials in your `.env` file:
-  - `OWNCLOUD_DB_USERNAME`
-  - `OWNCLOUD_DB_PASSWORD`
-- Ensure that the `OWNCLOUD_DB_HOST` matches the name of the MariaDB service (e.g., `mariadb`)
-- Restart Docker after fixing credentials:
-  ```bash
-  docker-compose down
-  docker-compose up -d
+```
+Access through untrusted domain
+```
 
-  Error: ACME Rate Limit - Too Many Failed Authorizations
-  shows: acme: error: 429 :: POST :: https://acme-v02.api.letsencrypt.org/acme/new-order :: too many failed authorizations (5) for "yourdomain.duckdns.org"
+To fix:
 
-This happens when Traefik fails to validate your domain too many times in 1 hour.
+```bash
+docker exec -it nextcloud bash
+vi /var/www/html/config/config.php
+```
 
-Wait at least 60 minutes before retrying.
+Add or update the trusted_domains array:
 
-Make sure:
+```php
+'trusted_domains' => [
+  0 => 'localhost',
+  1 => 'nextcloud.yourdomain.com',
+],
+```
 
-DuckDNS is correctly pointing to your public IP
+## 🐳 Fixing File Permission Issues
 
-Port 80 and 443 are open and forwarded in your router
+If uploads fail or files can't be accessed, try resetting permissions:
 
-ERROR: Your domain in traefik.yml matches the one in your .env OwnCloud Web UI Loads but File Upload Fails
- Symptoms:
-You can log in but cannot upload or create files.
+```bash
+sudo chown -R www-data:www-data ./nextcloud_data
+sudo chmod -R 755 ./nextcloud_data
+```
 
-Log might show permissions errors or missing volumes.
+Or inside the container:
 
-Fix:
-Ensure the files volume is mounted correctly:
+```bash
+docker exec -it nextcloud bash
+chown -R www-data:www-data /var/www/html
+```
 
-yaml
-volumes:
-  - files:/mnt/data
-Check ownership of the volume:
+## 🐘 Database Connection Issues
 
-bash
-docker exec -it owncloud_server bash
-ls -l /mnt/data
-chown -R www-data:www-data /mnt/data
+If logs show something like:
 
-Restart container:
-docker-compose restart owncloud
+```
+SQLSTATE[HY000] [1045] Access denied for user
+```
+
+Check that:
+- Your `.env` values match the Docker Compose settings
+- The MariaDB container is healthy and running
+
+Restart everything:
+
+```bash
+docker compose down
+docker compose up -d
+```
+
+## 🔁 Restart the Stack
+
+If all else fails:
+
+```bash
+docker compose down
+docker compose up -d
+```
+
+## 🧠 Monitor with Portainer
+
+- Use **Portainer** at `http://<your-ip>:9000`
+- Navigate to **Containers > nextcloud > Logs**
+- Look for startup errors, permission problems, and network issues
