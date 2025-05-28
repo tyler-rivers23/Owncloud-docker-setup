@@ -19,7 +19,7 @@ This repository documents the setup of a secure self-hosted [Nextcloud](https://
 
 ### 📁 Nextcloud Web Interface
 ![Nextcloud UI](nextcloud-ui.png)
-(nextcloud-dashboard.png)
+![Nextcloud dashboard](nextcloud-dashboard.png)
 ### 🔐 NGINX Proxy Manager Setup
 ![NPM Proxy Host](nignx-pm.png)
 
