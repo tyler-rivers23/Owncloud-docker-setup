@@ -1,45 +1,16 @@
-# OwnCloud Docker Setup
+# ☁️ Nextcloud Docker Setup with NGINX Proxy Manager
 
-This repository documents the full deployment of my self-hosted OwnCloud server using Docker Compose. The setup includes reverse proxying with Traefik (for HTTPS), database support via MariaDB, caching with Redis, and monitoring with Grafana and Promtail.
+This repository documents the setup of a secure self-hosted [Nextcloud](https://nextcloud.com) server using Docker Compose and HTTPS via **NGINX Proxy Manager**. This is ideal for Raspberry Pi, home servers, or small business environments.
 
----
+## ✅ Features
 
-##  Features
+- Nextcloud with persistent storage
+- NGINX Proxy Manager for HTTPS with Let's Encrypt
+- MariaDB as backend database
+- Redis cache for improved performance
+- Optional monitoring tools (Grafana/Promtail)
 
-- OwnCloud cloud storage via Docker
-- HTTPS automatically configured with Traefik and Let's Encrypt
-- Real-time monitoring via Grafana + Promtail
-- Redis caching for performance improvements
-- External domain support via DuckDNS
-- Secure environment for personal or business use
+## 📖 Documentation
 
----
-
-##  Tech Stack
-
-- **OwnCloud** – File hosting and cloud storage
-- **Docker & Docker Compose** – Container orchestration
-- **Traefik** – Reverse proxy and automatic HTTPS
-- **MariaDB** – MySQL-compatible database backend
-- **Redis** – Caching backend for OwnCloud
-- **Grafana** – Monitoring dashboards
-- **Promtail** – Log aggregation for Grafana
-- **DuckDNS** – Free dynamic DNS service
-
----
-
-## Folder Structure
-
-```text
-owncloud-docker-setup/
-├── docker-compose.yml
-├── .env.example
-├── traefik/
-│   └── traefik.yml
-├── grafana/
-│   └── dashboards/
-├── docs/
-│   ├── setup-instructions.md
-│   ├── troubleshooting.md
-│   └── architecture.png
-├── README.md
+- [Setup Instructions](setup-instructions.md)
+- [Troubleshooting Guide](troubleshooting.md)
