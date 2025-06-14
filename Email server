@@ -60,3 +60,8 @@ In config.php:
 Use Nextcloud’s built-in notification:
 
 docker exec -u www-data nextcloud_app php occ notification:generate trivers23 "Nextcloud Email Test
+
+🧪 Troubleshooting Tips
+Issue	Fix
+msmtp: cannot read output of 'pass show ...'	Ensure GPG_TTY is set and you’ve run gpgconf --launch gpg-agent
+Email not sent	Check ~/.msmtp.log for SMTP errors
