@@ -1,0 +1,62 @@
+Nextcloud Email Server & Redis Configuration
+Overview
+
+This guide documents how I configured the SMTP email server and Redis caching service for my Docker-based Nextcloud deployment.
+📩 Email Server Setup (SMTP with Gmail)
+🔧 Configuration Method: msmtp
+
+I used msmtp to allow Nextcloud to send mail using Gmail's SMTP servers.
+🔄 Steps Taken
+
+    Install msmtp inside your Nextcloud container or base system:
+
+apt update && apt install -y msmtp msmtp-mta
+
+Create .msmtprc config file in root or www-data's home directory:
+
+nano ~/.msmtprc
+
+defaults
+auth on
+tls on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile ~/.msmtp.log
+
+account gmail
+host smtp.gmail.com
+port 587
+from tyler.rivers2023@gmail.com
+user tyler.rivers2023@gmail.com
+passwordeval "pass show gmail/nextcloud-app"
+
+account default : gmail
+
+Ensure proper file permissions:
+
+chmod 600 ~/.msmtprc
+
+Store the Gmail app password using pass (Password Store):
+
+export GPG_TTY=$(tty)
+pass insert gmail/nextcloud-app
+
+Configure Nextcloud to use msmtp:
+In config.php:
+
+    'mail_smtpmode' => 'smtp',
+    'mail_smtpsecure' => 'tls',
+    'mail_sendmailmode' => 'smtp',
+    'mail_smtphost' => 'smtp.gmail.com',
+    'mail_smtpport' => '587',
+    'mail_smtpauth' => 1,
+    'mail_smtpauthtype' => 'LOGIN',
+    'mail_smtpname' => 'tyler.rivers2023@gmail.com',
+    'mail_smtppassword' => '<app-password>',
+    'mail_from_address' => 'tyler.rivers2023',
+    'mail_domain' => 'gmail.com',
+
+✅ Test Email
+
+Use Nextcloud’s built-in notification:
+
+docker exec -u www-data nextcloud_app php occ notification:generate trivers23 "Nextcloud Email Test
