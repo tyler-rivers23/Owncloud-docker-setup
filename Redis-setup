@@ -1,0 +1,35 @@
+📦 Purpose
+
+Redis is used to cache file locking and improve performance.
+🔄 Steps Taken
+
+    Start Redis container (Docker Compose):
+
+redis:
+  image: redis:alpine
+  container_name: nextcloud_redis
+  restart: always
+
+Install Redis PHP extension (if using custom image):
+
+docker-php-ext-install redis
+
+Update Nextcloud config.php:
+
+'memcache.locking' => '\\OC\\Memcache\\Redis',
+'memcache.local' => '\\OC\\Memcache\\Redis',
+'redis' => [
+    'host' => 'redis',
+    'port' => 6379,
+],
+
+    ⚠️ Ensure "redis" is the name of the Redis container in your docker-compose.yml.
+
+Restart services:
+
+docker-compose down
+docker-compose up -d
+
+Verify Redis is working:
+
+docker exec -it nextcloud_app php occ config:system:get redis
